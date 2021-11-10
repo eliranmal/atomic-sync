@@ -2,29 +2,29 @@
 
 
 main() {
-  local temp_dir
+	local temp_dir
 
 	local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
 	local root_dir="$source_dir"'/..'
-  local build_dir="$root_dir"'/etc'
+	local build_dir="$root_dir"'/etc'
 
-  temp_dir="$(create_temp_dir)"
-  cleanup_dir_on_exit "$temp_dir"
+	temp_dir="$(create_temp_dir)"
+	cleanup_dir_on_exit "$temp_dir"
 
-  copySettings "$temp_dir"
-  generatePackageList "$temp_dir"
+	copySettings "$temp_dir"
+	generatePackageList "$temp_dir"
 
-  cp -r "$temp_dir" "$build_dir"
+	cp -r "$temp_dir" "$build_dir"
 }
 
 copySettings() {
-  local output_dir="$1"
-  cp ~/.atom/*.cson "$output_dir"
+	local output_dir="$1"
+	cp ~/.atom/*.cson "$output_dir"
 }
 
 generatePackageList() {
-  local output_dir="$1"
-  apm list --installed --bare > "$output_dir"'/package.list'
+	local output_dir="$1"
+	apm list --installed --bare > "$output_dir"'/package.list'
 }
 
 create_temp_dir() {

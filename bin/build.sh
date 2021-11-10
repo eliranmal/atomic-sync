@@ -14,7 +14,7 @@ main() {
 	copySettings "$temp_dir"
 	generatePackageList "$temp_dir"
 
-	cp -r "$temp_dir" "$build_dir"
+	cp -r "$temp_dir"/* "$build_dir"
 }
 
 copySettings() {

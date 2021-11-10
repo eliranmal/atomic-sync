@@ -1,0 +1,19 @@
+"*":
+  autosave:
+    enabled: true
+  core:
+    audioBeep: false
+    autoHideMenuBar: true
+    disabledPackages: [
+      "jslint"
+      "linter-tidy"
+    ]
+    projectHome: "C:\\Users\\Eliran\\dev"
+    telemetryConsent: "no"
+  editor:
+    fontSize: 15
+  "exception-reporting":
+    userId: "73bf2c3e-abe7-47d0-95af-057afc049b30"
+  "linter-ui-default": {}
+  welcome:
+    showOnStartup: false

@@ -3,6 +3,7 @@ autocomplete-javascript@0.0.2
 block-comment@0.4.3
 busy-signal@2.0.1
 click-a-path@0.3.0
+git-plus@8.7.1
 intentions@2.1.1
 jslint@1.5.1
 linter@3.4.0

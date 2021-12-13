@@ -8,12 +8,18 @@
       "jslint"
       "linter-tidy"
     ]
+    packagesWithSnippetsDisabled: [
+      "language-todo"
+    ]
     projectHome: "C:\\Users\\Eliran\\dev"
     telemetryConsent: "no"
   editor:
     fontSize: 15
   "exception-reporting":
     userId: "73bf2c3e-abe7-47d0-95af-057afc049b30"
-  "linter-ui-default": {}
+  "linter-ui-default":
+    showPanel: true
+  todo:
+    a_pattern: "(TODO|todo|fixme)\\s*[:-].+"
   welcome:
     showOnStartup: false

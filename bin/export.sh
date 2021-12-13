@@ -6,20 +6,20 @@ main() {
 
 	local source_dir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
 	local root_dir="$source_dir"'/..'
-	local build_dir="$root_dir"'/etc'
+	local etc_dir="$root_dir"'/etc'
 
 	temp_dir="$(create_temp_dir)"
 	cleanup_dir_on_exit "$temp_dir"
 
-	copy_settings "$temp_dir"
+	export_settings "$temp_dir"
 	generate_package_list "$temp_dir"
 
-	cp -r "$temp_dir"/* "$build_dir"
+	cp -r "$temp_dir"/* "$etc_dir"
 }
 
-copy_settings() {
-	local output_dir="$1"
-	cp ~/.atom/*.cson "$output_dir"
+export_settings() {
+	local target_dir="$1"
+	cp ~/.atom/*.cson "$target_dir"
 }
 
 generate_package_list() {
@@ -28,7 +28,7 @@ generate_package_list() {
 }
 
 create_temp_dir() {
-	mktemp -d 2>/dev/null || mktemp -d -t 'atom-config-build'
+	mktemp -d 2>/dev/null || mktemp -d -t 'atom-config-export'
 }
 
 cleanup_dir_on_exit() {

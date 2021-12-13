@@ -11,18 +11,18 @@ main() {
 	temp_dir="$(create_temp_dir)"
 	cleanup_dir_on_exit "$temp_dir"
 
-	copySettings "$temp_dir"
-	generatePackageList "$temp_dir"
+	copy_settings "$temp_dir"
+	generate_package_list "$temp_dir"
 
 	cp -r "$temp_dir"/* "$build_dir"
 }
 
-copySettings() {
+copy_settings() {
 	local output_dir="$1"
 	cp ~/.atom/*.cson "$output_dir"
 }
 
-generatePackageList() {
+generate_package_list() {
 	local output_dir="$1"
 	apm list --installed --bare > "$output_dir"'/package.list'
 }

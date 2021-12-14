@@ -3,19 +3,28 @@
 
 usage() {
 	echo "
-  usage: ./atom-config.sh <import|export|unimport> [--no-packages]
-  this command offers a set of utilities to sync the configuration files and/or installed packages of the Atom code editor.
+  USAGE
 
-	import
-		saves a backup of any existing .cson files under the atom configuration directory, and replaces the originals with configuration files from the local repository.
-		also, unless --no-packages is used, installs all packages found on the packages list file generated with the export command.
+  ./atom-config.sh <import|export|unimport> [--no-packages]
 
-	export
-		copies all .cson files under the atom configuration directory, as well as a generated file with the list of installed packages, into the local repository.
 
-	unimport
-		restore configuration files from saved backup, after an import.
-		beware - this will override any existing atom configuration, and is irreversible.
+  OVERVIEW
+
+  this command syncs configuration files and/or installed packages of the Atom code editor with the local repository.
+
+
+  SUBCOMMANDS
+
+  import
+    saves a backup of any existing .cson files under the atom configuration directory, and replaces the originals with configuration files from the local repository.
+    also, unless --no-packages is used, installs all packages found on the packages list file generated with the export command.
+
+  export
+    copies all .cson files under the atom configuration directory, as well as a generated file with the list of installed packages, into the local repository.
+
+  unimport
+    restore configuration files from saved backup, after an import.
+    beware! this will override any existing atom configuration, and is irreversible.
 
 "
 }

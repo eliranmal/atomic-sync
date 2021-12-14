@@ -103,7 +103,7 @@ cleanup_dir_on_exit() {
 }
 
 validate() {
-	if [[ -z $1 ]] || ; then
+	if [[ -z $1 ]]; then
 		usage
 		exit 1
 	fi

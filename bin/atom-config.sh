@@ -81,6 +81,18 @@ export_settings() {
 	cp ~/.atom/*.	cson "$target_dir"
 }
 
+backup_settings() {
+	for f in ~/.atom/*.cson; do
+    cp -- "$f" "${f}.backup"
+	done
+}
+
+restore_settings() {
+	for f in ~/.atom/*.cson.backup; do
+		mv -- "$f" "${f%.backup}"
+	done
+}
+
 import_packages() {
 	local input_dir="$1"
 	apm install --packages-file "$input_dir"'/package.list'
@@ -89,18 +101,6 @@ import_packages() {
 export_packages() {
 	local output_dir="$1"
 	apm list --installed --bare > "$output_dir"'/package.list'
-}
-
-backup_settings() {
-	for f in ~/.atom/*.cson; do
-    mv -- "$f" "${f}.backup"
-	done
-}
-
-restore_settings() {
-	for f in ~/.atom/*.cson.backup; do
-		mv -- "$f" "${f%.backup}"
-	done
 }
 
 create_temp_dir() {

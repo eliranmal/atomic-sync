@@ -124,7 +124,7 @@ unimport_packages() {
 
 export_packages() {
 	local store_temp_dir="$1"
-	log 'storing a list of all installed (custom) packages to a file'
+	log 'storing a list of all installed (custom) packages to a file in the temp directory'
 	apm list --installed --bare > "$store_temp_dir"'/package.list'
 }
 

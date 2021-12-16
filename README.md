@@ -25,6 +25,5 @@ syncs 🔄 atom ⚛ config/packages to the cloud ☁️
 
 
 
-
 [bin]: /bin
 [etc]: /etc

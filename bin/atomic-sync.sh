@@ -54,12 +54,11 @@ main() {
 cmd_import() {
 	local store_dir="$1"
 	local store_temp_dir="$2"
-	local flags="$3"
-	log "copying all files from the local repository to a temp direcory"
-	cp -r "$store_dir"/* "$store_temp_dir"
+	local flag="$3"
+	unmarshall_settings "$store_dir" "$store_temp_dir"
 	backup_settings
 	import_settings "$store_temp_dir"
-	if [[ $flags != '--skip-packages' ]]; then
+	if [[ $flag != '--skip-packages' ]]; then
 		import_packages "$store_temp_dir"
 	fi
 }
@@ -76,21 +75,38 @@ cmd_export() {
 	local store_temp_dir="$2"
 	export_settings "$store_temp_dir"
 	export_packages "$store_temp_dir"
-	log "copying all files from the temp direcory into the local repository"
-	cp -r "$store_temp_dir"/* "$store_dir"
+	marshall_settings "$store_dir" "$store_temp_dir"
 }
 
 
 import_settings() {
 	local store_temp_dir="$1"
-	log "copying configuration files from the temp direcory into atom's config direcory"
-	cp "$store_temp_dir"/*.cson ~/.atom/
+	log "copying configuration files from the temp direcory into atom's config direcory."
+	if prompt_confirm 'this will overwrite any existing atom configuration files.'; then
+		cp "$store_temp_dir"/*.cson ~/.atom/
+	else
+		abort
+	fi
 }
 
 export_settings() {
 	local store_temp_dir="$1"
-	log "copying configuration files from atom's config direcory into a temp direcory"
+	log "copying configuration files from atom's config direcory into a temp direcory."
 	cp ~/.atom/*.cson "$store_temp_dir"
+}
+
+marshall_settings() {
+	local store_dir="$1"
+	local store_temp_dir="$2"
+	log "copying all files from the temp direcory into the local repository"
+	cp -r "$store_temp_dir"/* "$store_dir"
+}
+
+unmarshall_settings() {
+	local store_dir="$1"
+	local store_temp_dir="$2"
+	log "copying all files from the local repository to a temp direcory"
+	cp -r "$store_dir"/* "$store_temp_dir"
 }
 
 backup_settings() {
@@ -101,10 +117,14 @@ backup_settings() {
 }
 
 restore_settings() {
-	log 'overwriting atom configuration files in the atom config directory with *.cson.backup files'
-	for f in ~/.atom/*.cson.backup; do
-		mv -- "$f" "${f%.backup}"
-	done
+	log 'replacing atom configuration files in the atom config directory with *.cson.backup files'
+	if prompt_confirm 'this will overwrite any existing atom configuration files.'; then
+		for f in ~/.atom/*.cson.backup; do
+			mv -- "$f" "${f%.backup}"
+		done
+	else
+		abort
+	fi
 }
 
 import_packages() {
@@ -118,8 +138,12 @@ $(cat "$store_temp_dir"'/package.list')
 
 unimport_packages() {
 	local store_temp_dir="$1"
-	log 'removing all packages found on the package list file'
-	apm remove --packages-file "$store_temp_dir"'/package.list'
+	log 'removing all packages found on the package list file.'
+	if prompt_confirm 'this will remove installed packages from atom.'; then
+		apm remove --packages-file "$store_temp_dir"'/package.list'
+	else
+		abort
+	fi
 }
 
 export_packages() {
@@ -136,6 +160,15 @@ cleanup_dir_on_exit() {
 	trap 'rm -rf '"$@"' >/dev/null 2>&1' EXIT
 }
 
+prompt_confirm() {
+	local message="$1"
+
+	read -p "
+               > $message continue? (y/n) " -n 1 -r
+	echo
+	[[ $REPLY =~ ^[Yy]$ ]]
+}
+
 validate() {
 	if [[ -z $1 ]]; then
 		usage
@@ -150,6 +183,12 @@ is_available() {
 log() {
 	echo "
  [atomic-sync] $1"
+}
+
+abort() {
+	log "bye bye!
+"
+	exit 0
 }
 
 

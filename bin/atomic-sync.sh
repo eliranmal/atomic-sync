@@ -5,7 +5,7 @@ usage() {
 	echo "
   USAGE
 
-  ./atom-config.sh <import|export|unimport> [--skip-packages]
+  ./atomic-sync.sh <import|export|unimport> [--skip-packages]
 
 
   OVERVIEW
@@ -129,7 +129,7 @@ export_packages() {
 }
 
 create_temp_dir() {
-	mktemp -d 2>/dev/null || mktemp -d -t 'atom-config-sync'
+	mktemp -d 2>/dev/null || mktemp -d -t 'atomic-sync'
 }
 
 cleanup_dir_on_exit() {
@@ -149,7 +149,7 @@ is_available() {
 
 log() {
 	echo "
- [atom-config] $1"
+ [atomic-sync] $1"
 }
 
 
